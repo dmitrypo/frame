@@ -19,7 +19,7 @@
     "confidence": "^1.x.x",
     "glue": "^2.x.x",
     "handlebars": "^4.x.x",
-    "hapi": "^9.x.x",
+    "hapi": "^10.x.x",
     "hapi-auth-basic": "^3.x.x",
     "hapi-mongo-models": "^2.x.x",
     "hoek": "^2.x.x",
