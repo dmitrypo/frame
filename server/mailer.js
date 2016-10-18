@@ -4,6 +4,7 @@ var Handlebars = require('handlebars');
 var Nodemailer = require('nodemailer');
 var Markdown = require('nodemailer-markdown').markdown;
 var Config = require('../config');
+var pug = require('pug');
 
 
 var internals = {};
@@ -22,18 +23,10 @@ internals.renderTemplate = function (signature, context, callback) {
         return callback(null, internals.templateCache[signature](context));
     }
 
-    var filePath = __dirname + '/emails/' + signature + '.hbs.md';
-    var options = { encoding: 'utf-8' };
+    var filePath = __dirname + '/emails/' + signature + '.pug';
 
-    Fs.readFile(filePath, options, function (err, source) {
-
-        if (err) {
-            return callback(err);
-        }
-
-        internals.templateCache[signature] = Handlebars.compile(source);
-        callback(null, internals.templateCache[signature](context));
-    });
+    internals.templateCache[signature] = pug.compileFile(filePath);
+    callback(null, internals.templateCache[signature](context));
 };
 
 
@@ -47,7 +40,7 @@ internals.sendEmail = function (options, template, context, callback) {
 
         options = Hoek.applyToDefaults(options, {
             from: Config.get('/system/fromAddress'),
-            markdown: content
+            html: content
         });
 
         internals.transport.sendMail(options, callback);
