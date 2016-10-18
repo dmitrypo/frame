@@ -173,7 +173,7 @@ internals.applyRoutes = function (server, next) {
                 email: ['user', function (done, results) {
 
                     var emailOptions = {
-                        subject: 'Reset your ' + Config.get('/projectName') + ' password',
+                        subject: Config.get('/resetSubject'),
                         to: request.payload.email
                     };
                     var template = 'forgot-password';

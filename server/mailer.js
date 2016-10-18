@@ -19,6 +19,8 @@ internals.templateCache = {};
 
 internals.renderTemplate = function (signature, context, callback) {
 
+    context.staticHost = Config.get('/staticHost');
+
     if (internals.templateCache[signature]) {
         return callback(null, internals.templateCache[signature](context));
     }
